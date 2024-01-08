@@ -1,0 +1,105 @@
+let spechy_button = document.getElementsByClassName("fsm-webchat2");
+spechy_button[0].addEventListener("click", function() {
+
+    let spc_name= ($spechyConfig.request.spc_name!='')?$spechyConfig.request.spc_name:"";
+    let spc_email= ($spechyConfig.request.spc_email!='')?$spechyConfig.request.spc_email:"";
+    let spc_lang= ($spechyConfig.request.spc_lang!='')?$spechyConfig.request.spc_lang:"tr";
+
+    let spechy_html = `
+    <!-- SPECHY.COM -->
+      <div class="spechy-modal">
+        <div>
+          <div class="spechy-close"></div>
+          <iframe allow="camera; microphone;" src="https://teknosa.spechy.live/teknosa/w/?spc_name=${spc_name}&spc_email=${spc_email}">
+        </div>
+      </div>
+    <!-- SPECHY.COM -->
+    `;
+  	document.body.insertAdjacentHTML('BeforeEnd', spechy_html);
+
+    let spechy_close = document.getElementsByClassName("spechy-close");
+    spechy_close[0].addEventListener("click", function() {
+        document.getElementsByClassName("spechy-modal")[0].remove();
+    });
+
+    console.log("spc_name",spc_name);
+});
+
+let spechy_css = `
+  html,body {
+    min-height:100%;
+  }
+  .spechy-modal {
+    position: fixed !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height:100vh;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99999;
+
+  }
+  .spechy-modal > div {
+    max-width: 1024px;
+          width: 60%;
+      height: 50vh;
+      
+    position: relative;
+    margin: 10% auto;
+    padding: 0px;
+    border:10px;
+    border-radius: 10px;
+    background: #fff;
+  }
+  .spechy-modal iframe {
+    width:100%;
+    height:100%;
+    border:0;
+    border-radius:5px;
+    margin:0;
+    padding:0;
+    overflow:hidden;
+  }
+  .spechy-close {
+    background-image: url(https://whitelabel.arvia.chat/widget/images/modal-close.png);
+    background-repeat: no-repeat;
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    right: 15px;
+    top: 1px;
+    cursor: pointer;
+    z-index: 29999;
+  }
+
+  @media (max-width: 1024px) {
+    .spechy-modal > div {
+      width: 100%;
+      height: 70vh;
+      max-width:90%;
+      max-height: 70vh;
+    }
+
+  }
+
+  @media screen and (min-color-index:0) and(-webkit-min-device-pixel-ratio:0)
+  { @media {
+    .spechy-modal > div {
+      width: 100%;
+      height: 70vh;
+      max-width:90%;
+      min-height: 10vh;
+    }
+    .spechy-modal iframe {
+      min-height : 10%;
+    }
+  }}
+`;
+
+let spechy_style = document.createElement('style');
+spechy_style.type = 'text/css' ;
+if(spechy_style.styleSheet){ styleElem.styleSheet.cssText = spechy_css; }
+else{ spechy_style.appendChild(document.createTextNode(spechy_css)); }
+let spechy_head = document.getElementsByTagName('head')[0] ;
+spechy_head.appendChild(spechy_style);
